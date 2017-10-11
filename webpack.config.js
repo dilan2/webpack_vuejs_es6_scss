@@ -33,6 +33,10 @@ module.exports = {
       { // sass / scss loader for webpack
         test: /\.(sass|scss)$/,
         use: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+      },
+      {
+        test: /\.(png|jpg|svg|gif|ttf|eot|woff|woff2)$/,
+        loader: 'file-loader?name=[path][name].[ext]'
       }
       ]
     },
