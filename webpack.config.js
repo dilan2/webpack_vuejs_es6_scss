@@ -12,6 +12,9 @@ module.exports = {
     path: `${__dirname}/dist`,
     filename: '[name].bundle.js',
   },
+
+  devtool: "source-map",
+  
   module: {
 
     rules: [
@@ -32,11 +35,21 @@ module.exports = {
   },
       { // sass / scss loader for webpack
         test: /\.(sass|scss)$/,
-        use: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+        use: ExtractTextPlugin.extract([{
+          loader: 'css-loader',
+          options: {
+            sourceMap: true
+          }
+        },{
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true
+          }
+        }]),
       },
       {
         test: /\.(png|jpg|svg|gif|ttf|eot|woff|woff2)$/,
-        loader: 'file-loader?name=[path][name].[ext]'
+        loader: 'file-loader?name=[hash].[ext]'
       }
       ]
     },
@@ -47,7 +60,7 @@ module.exports = {
 },
 plugins: [
 new ExtractTextPlugin({ // define where to save the file
-  filename: 'css/[name].bundle.css',
+  filename: '[name].bundle.css',
   allChunks: true,
 }),
 ],
